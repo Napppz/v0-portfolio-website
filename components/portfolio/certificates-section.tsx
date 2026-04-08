@@ -16,6 +16,7 @@ interface Certificate {
   title: string;
   url: string;
   uploadedAt: string;
+  isPdf?: boolean;
 }
 
 export function CertificatesSection() {
@@ -120,6 +121,7 @@ export function CertificatesSection() {
         title: data.title,
         url: data.url,
         uploadedAt: data.uploadedAt,
+        isPdf: file.type === "application/pdf",
       };
 
       setCertificates((prev) => [...prev, newCert]);
@@ -240,17 +242,25 @@ export function CertificatesSection() {
                 }`}
                 style={{ transitionDelay: `${(index + 2) * 100}ms` }}
               >
-                {/* Certificate Image Preview */}
+                {/* Certificate Image/PDF Preview */}
                 {cert.url && (
-                  <div className="relative aspect-[4/3] w-full bg-secondary/50">
-                    <Image
-                      src={cert.url}
-                      alt={cert.title}
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                  <div className="relative aspect-[4/3] w-full bg-secondary/50 overflow-hidden">
+                    {cert.isPdf || cert.url.toLowerCase().endsWith('.pdf') ? (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
+                        <FileImage className="w-16 h-16 text-primary mb-2" />
+                        <span className="text-sm font-medium text-foreground">PDF Document</span>
+                        <span className="text-xs text-muted-foreground mt-1">{cert.title}</span>
+                      </div>
+                    ) : (
+                      <Image
+                        src={cert.url}
+                        alt={cert.title}
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none" />
                   </div>
                 )}
 
@@ -320,14 +330,22 @@ export function CertificatesSection() {
             </DialogHeader>
             {previewCert?.url && (
               <div className="relative w-full overflow-auto max-h-[70vh]">
-                <Image
-                  src={previewCert.url}
-                  alt={previewCert.title}
-                  width={1200}
-                  height={800}
-                  className="w-full h-auto object-contain rounded-lg"
-                  unoptimized
-                />
+                {previewCert.isPdf || previewCert.url.toLowerCase().endsWith('.pdf') ? (
+                  <iframe
+                    src={previewCert.url}
+                    title={previewCert.title}
+                    className="w-full h-[70vh] rounded-lg border border-border"
+                  />
+                ) : (
+                  <Image
+                    src={previewCert.url}
+                    alt={previewCert.title}
+                    width={1200}
+                    height={800}
+                    className="w-full h-auto object-contain rounded-lg"
+                    unoptimized
+                  />
+                )}
               </div>
             )}
           </DialogContent>

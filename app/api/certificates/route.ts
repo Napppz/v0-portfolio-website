@@ -7,12 +7,17 @@ export async function GET() {
       prefix: 'certificates/',
     })
 
-    const certificates = blobs.map((blob) => ({
-      id: blob.pathname,
-      url: blob.url,
-      title: blob.pathname.split('/').pop()?.replace(/^\d+-/, '') || 'Certificate',
-      uploadedAt: blob.uploadedAt,
-    }))
+    const certificates = blobs.map((blob) => {
+      const filename = blob.pathname.split('/').pop() || ''
+      const isPdf = filename.toLowerCase().endsWith('.pdf')
+      return {
+        id: blob.pathname,
+        url: blob.url,
+        title: filename.replace(/^\d+-/, '').replace(/\.[^/.]+$/, '') || 'Certificate',
+        uploadedAt: blob.uploadedAt,
+        isPdf,
+      }
+    })
 
     return NextResponse.json({ certificates })
   } catch (error) {
