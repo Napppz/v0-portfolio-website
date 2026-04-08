@@ -246,10 +246,26 @@ export function CertificatesSection() {
                 {cert.url && (
                   <div className="relative aspect-[4/3] w-full bg-secondary/50 overflow-hidden">
                     {cert.isPdf || cert.url.toLowerCase().endsWith('.pdf') ? (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
-                        <FileImage className="w-16 h-16 text-primary mb-2" />
-                        <span className="text-sm font-medium text-foreground">PDF Document</span>
-                        <span className="text-xs text-muted-foreground mt-1">{cert.title}</span>
+                      <div className="absolute inset-0">
+                        {/* PDF Embed Preview */}
+                        <object
+                          data={`${cert.url}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                          type="application/pdf"
+                          className="w-full h-full"
+                        >
+                          {/* Fallback jika browser tidak support embed PDF */}
+                          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
+                            <div className="w-20 h-24 bg-card rounded-lg shadow-lg flex flex-col items-center justify-center border border-border mb-3">
+                              <div className="w-12 h-1 bg-primary/60 rounded mb-1" />
+                              <div className="w-10 h-1 bg-muted-foreground/40 rounded mb-1" />
+                              <div className="w-12 h-1 bg-muted-foreground/40 rounded mb-1" />
+                              <div className="w-8 h-1 bg-muted-foreground/40 rounded mb-2" />
+                              <div className="text-[10px] font-bold text-primary">PDF</div>
+                            </div>
+                            <span className="text-sm font-medium text-foreground">Sertifikat PDF</span>
+                            <span className="text-xs text-muted-foreground mt-1 px-4 text-center truncate max-w-full">{cert.title}</span>
+                          </div>
+                        </object>
                       </div>
                     ) : (
                       <Image
@@ -324,27 +340,48 @@ export function CertificatesSection() {
 
         {/* Preview Dialog */}
         <Dialog open={!!previewCert} onOpenChange={() => setPreviewCert(null)}>
-          <DialogContent className="max-w-4xl max-h-[90vh]">
+          <DialogContent className="max-w-5xl max-h-[90vh]">
             <DialogHeader>
-              <DialogTitle>{previewCert?.title}</DialogTitle>
+              <DialogTitle className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-primary" />
+                {previewCert?.title}
+              </DialogTitle>
             </DialogHeader>
             {previewCert?.url && (
-              <div className="relative w-full overflow-auto max-h-[70vh]">
+              <div className="relative w-full">
                 {previewCert.isPdf || previewCert.url.toLowerCase().endsWith('.pdf') ? (
-                  <iframe
-                    src={previewCert.url}
-                    title={previewCert.title}
-                    className="w-full h-[70vh] rounded-lg border border-border"
-                  />
+                  <div className="flex flex-col gap-4">
+                    {/* PDF Viewer menggunakan embed */}
+                    <embed
+                      src={previewCert.url}
+                      type="application/pdf"
+                      className="w-full h-[70vh] rounded-lg border border-border"
+                    />
+                    {/* Tombol buka di tab baru jika embed tidak bekerja */}
+                    <div className="flex justify-center">
+                      <Button
+                        variant="outline"
+                        asChild
+                        className="hover:bg-primary/10 hover:text-primary"
+                      >
+                        <a href={previewCert.url} target="_blank" rel="noopener noreferrer">
+                          <Eye className="w-4 h-4 mr-2" />
+                          Buka PDF di Tab Baru
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
                 ) : (
-                  <Image
-                    src={previewCert.url}
-                    alt={previewCert.title}
-                    width={1200}
-                    height={800}
-                    className="w-full h-auto object-contain rounded-lg"
-                    unoptimized
-                  />
+                  <div className="overflow-auto max-h-[70vh]">
+                    <Image
+                      src={previewCert.url}
+                      alt={previewCert.title}
+                      width={1200}
+                      height={800}
+                      className="w-full h-auto object-contain rounded-lg"
+                      unoptimized
+                    />
+                  </div>
                 )}
               </div>
             )}
