@@ -1,15 +1,23 @@
 "use client";
 
-import { Github, Linkedin, Mail, Instagram } from "lucide-react";
+import { Github, Linkedin, Mail, Instagram, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export function HeroSection() {
   return (
-    <section className="min-h-screen flex flex-col justify-center px-6 lg:px-12">
-      <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
+    <section className="min-h-screen flex flex-col justify-center px-6 lg:px-12 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float animation-delay-300" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
         {/* Left Side - Info */}
         <div className="space-y-6">
-          <div className="space-y-2">
+          <div className="space-y-2 opacity-0 animate-fade-in-left">
             <p className="text-primary font-mono text-sm tracking-wider">
               MAHASISWA INFORMATIKA
             </p>
@@ -21,7 +29,7 @@ export function HeroSection() {
             </p>
           </div>
 
-          <p className="text-muted-foreground leading-relaxed max-w-lg">
+          <p className="text-muted-foreground leading-relaxed max-w-lg opacity-0 animate-fade-in-left animation-delay-200">
             Saya adalah mahasiswa Informatika yang passionate dalam membangun
             aplikasi web dan software. Fokus pada pengembangan dengan{" "}
             <span className="text-primary font-medium">Python</span>,{" "}
@@ -31,50 +39,50 @@ export function HeroSection() {
           </p>
 
           {/* Navigation Links */}
-          <nav className="flex flex-col gap-3 pt-4">
+          <nav className="flex flex-col gap-3 pt-4 opacity-0 animate-fade-in-left animation-delay-300">
             <Link
               href="#about"
-              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-all duration-300"
             >
-              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-foreground transition-all" />
+              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-primary transition-all duration-300" />
               <span className="text-sm font-medium tracking-wide">TENTANG</span>
             </Link>
             <Link
               href="#skills"
-              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-all duration-300"
             >
-              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-foreground transition-all" />
+              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-primary transition-all duration-300" />
               <span className="text-sm font-medium tracking-wide">KEAHLIAN</span>
             </Link>
             <Link
               href="#projects"
-              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-all duration-300"
             >
-              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-foreground transition-all" />
+              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-primary transition-all duration-300" />
               <span className="text-sm font-medium tracking-wide">PROYEK</span>
             </Link>
             <Link
               href="#certificates"
-              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-all duration-300"
             >
-              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-foreground transition-all" />
+              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-primary transition-all duration-300" />
               <span className="text-sm font-medium tracking-wide">SERTIFIKAT</span>
             </Link>
             <Link
               href="#contact"
-              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+              className="group flex items-center gap-3 text-muted-foreground hover:text-foreground transition-all duration-300"
             >
-              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-foreground transition-all" />
+              <span className="w-8 h-px bg-muted-foreground group-hover:w-16 group-hover:bg-primary transition-all duration-300" />
               <span className="text-sm font-medium tracking-wide">KONTAK</span>
             </Link>
           </nav>
 
           {/* Social Links */}
-          <div className="flex items-center gap-4 pt-6">
+          <div className="flex items-center gap-4 pt-6 opacity-0 animate-fade-in-left animation-delay-400">
             <Link
               href="https://github.com"
               target="_blank"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="p-3 rounded-full bg-card border border-border text-muted-foreground hover:text-primary hover:border-primary hover:scale-110 transition-all duration-300"
               aria-label="GitHub"
             >
               <Github className="w-5 h-5" />
@@ -82,7 +90,7 @@ export function HeroSection() {
             <Link
               href="https://linkedin.com"
               target="_blank"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="p-3 rounded-full bg-card border border-border text-muted-foreground hover:text-primary hover:border-primary hover:scale-110 transition-all duration-300"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
@@ -90,14 +98,14 @@ export function HeroSection() {
             <Link
               href="https://instagram.com"
               target="_blank"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="p-3 rounded-full bg-card border border-border text-muted-foreground hover:text-primary hover:border-primary hover:scale-110 transition-all duration-300"
               aria-label="Instagram"
             >
               <Instagram className="w-5 h-5" />
             </Link>
             <Link
               href="mailto:email@example.com"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="p-3 rounded-full bg-card border border-border text-muted-foreground hover:text-primary hover:border-primary hover:scale-110 transition-all duration-300"
               aria-label="Email"
             >
               <Mail className="w-5 h-5" />
@@ -105,29 +113,49 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Right Side - Visual */}
-        <div className="hidden lg:flex justify-center items-center">
+        {/* Right Side - Profile Photo */}
+        <div className="flex justify-center items-center opacity-0 animate-fade-in-right animation-delay-200">
           <div className="relative">
-            <div className="w-72 h-72 rounded-full bg-primary/10 flex items-center justify-center">
-              <div className="w-56 h-56 rounded-full bg-primary/20 flex items-center justify-center">
-                <div className="text-6xl font-bold text-primary">{"</>"}</div>
-              </div>
+            {/* Glowing Ring */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-accent blur-xl opacity-50 animate-pulse-glow" />
+            
+            {/* Profile Image Container */}
+            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-primary/50 animate-pulse-glow">
+              <Image
+                src="/images/profile.jpg"
+                alt="Foto Profil"
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
+            
             {/* Floating Elements */}
-            <div className="absolute -top-4 -right-4 px-3 py-1 bg-card border border-border rounded-full text-sm text-foreground">
+            <div className="absolute -top-4 -right-4 px-4 py-2 bg-card border border-border rounded-full text-sm text-foreground shadow-lg animate-float">
               Python
             </div>
-            <div className="absolute top-1/4 -left-8 px-3 py-1 bg-card border border-border rounded-full text-sm text-foreground">
+            <div className="absolute top-1/4 -left-12 px-4 py-2 bg-card border border-border rounded-full text-sm text-foreground shadow-lg animate-float animation-delay-200">
               Java
             </div>
-            <div className="absolute bottom-8 -right-6 px-3 py-1 bg-card border border-border rounded-full text-sm text-foreground">
+            <div className="absolute bottom-1/4 -right-10 px-4 py-2 bg-card border border-border rounded-full text-sm text-foreground shadow-lg animate-float animation-delay-400">
               JavaScript
             </div>
-            <div className="absolute -bottom-2 left-8 px-3 py-1 bg-card border border-border rounded-full text-sm text-foreground">
+            <div className="absolute -bottom-4 left-8 px-4 py-2 bg-card border border-border rounded-full text-sm text-foreground shadow-lg animate-float animation-delay-600">
               HTML/CSS
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 animate-fade-in-up animation-delay-600">
+        <Link
+          href="#about"
+          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+        >
+          <span className="text-xs font-medium tracking-wider">SCROLL</span>
+          <ChevronDown className="w-5 h-5 animate-bounce" />
+        </Link>
       </div>
     </section>
   );
